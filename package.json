@@ -1,0 +1,30 @@
+{
+  "name": "demo-web-shop",
+  "version": "1.0.0",
+  "description": "This project demonstrates my knowledge on test automation using Playwright",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "open": "playwright test --ui",
+    "lint": "eslint ./tests/ ./src/ --ext .js,.ts,.yml,.yaml",
+    "report": "playwright show-report",
+    "trace": "playwright show-trace",
+    "codegen": "playwright codegen https://demowebshop.tricentis.com/"
+  },
+  "keywords": [],
+  "author": "Jaco Karsten",
+  "license": "ISC",
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.2.0",
+    "@playwright/test": "^1.50.1",
+    "@stylistic/eslint-plugin": "^4.0.1",
+    "@types/node": "^22.13.5",
+    "@typescript-eslint/eslint-plugin": "^8.24.1",
+    "@typescript-eslint/parser": "^8.24.1",
+    "eslint": "^9.21.0",
+    "eslint-plugin-jsdoc": "^50.6.3",
+    "eslint-plugin-json": "^4.0.1",
+    "playwright-bdd": "^8.2.0",
+    "typescript": "^5.7.3"
+  }
+}

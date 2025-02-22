@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "npm: lint",
+            "type": "npm",
+            "script": "lint",
+            "problemMatcher": ["$eslint-stylish"],
+            "detail": "eslint ./tests/ ./src/ --ext .js,.ts,.yml,.yaml",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+
+            "label": "Generate All Tests",
+            "type": "shell",
+            "command": "npx",
+            "args": ["bddgen"],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        }
+    ]
+}

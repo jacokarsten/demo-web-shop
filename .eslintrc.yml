@@ -1,0 +1,345 @@
+env:
+  browser: true
+  es2021: true
+  node: true
+
+plugins:
+  - import
+  - jsdoc
+  - json
+  - n
+  - promise
+  - '@typescript-eslint'
+  - '@stylistic'
+
+extends:
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:n/recommended-module
+  - plugin:import/recommended
+  - plugin:promise/recommended
+  - plugin:jsdoc/recommended
+
+parser: '@typescript-eslint/parser'
+
+parserOptions:
+  ecmaVersion: latest
+  sourceType: module
+  project: './tsconfig.json'
+
+ignorePatterns: ['node_modules/**/*', '**/*.js']
+
+rules:
+  # https://eslint.org/docs/rules/indent
+  indent: off
+
+  # https://eslint.org/docs/rules/brace-style
+  brace-style: off
+
+  # https://eslint.org/docs/rules/linebreak-style
+  linebreak-style:
+    - error
+    - unix
+
+  # https://eslint.org/docs/rules/quotes
+  quotes:
+    - error
+    - single
+
+  # https://eslint.org/docs/rules/semi
+  semi:
+    - error
+    - always
+
+  # https://eslint.org/docs/rules/max-len
+  max-len:
+    - error
+    - 200
+    - 4
+
+  # https://eslint.org/docs/rules/new-parens
+  new-parens:
+    - error
+    - always
+
+  # https://eslint.org/docs/rules/no-labels
+  no-labels: error
+
+  # https://eslint.org/docs/rules/constructor-super
+  constructor-super: error
+
+  # https://eslint.org/docs/rules/no-cond-assign
+  no-cond-assign: error
+
+  # https://eslint.org/docs/rules/no-caller
+  no-caller: error
+
+  # https://eslint.org/docs/rules/no-bitwise
+  no-bitwise: error
+
+  # https://eslint.org/docs/rules/spaced-comment
+  spaced-comment:
+    - error
+    - always
+
+  # https://eslint.org/docs/rules/space-before-function-paren
+  space-before-function-paren:
+    - error
+    - anonymous: always
+      named: never
+      asyncArrow: always
+
+  # https://eslint.org/docs/rules/object-curly-spacing
+  object-curly-spacing:
+    - error
+    - always
+
+  # https://eslint.org/docs/rules/no-constructor-return
+  no-constructor-return: error
+
+  # https://eslint.org/docs/rules/no-shadow
+  no-shadow: error
+
+  # https://eslint.org/docs/rules/no-throw-literal
+  no-throw-literal: error
+
+  # https://eslint.org/docs/rules/no-fallthrough
+  no-fallthrough: error
+
+  # https://eslint.org/docs/2.0.0/rules/no-undef-init
+  no-undef-init: error
+
+  # https://eslint.org/docs/rules/no-unused-expressions
+  no-unused-expressions: error
+
+  # https://eslint.org/docs/rules/sort-keys
+  sort-keys: off
+
+  # https://eslint.org/docs/rules/radix
+  radix:
+    - error
+    - as-needed
+
+  # https://eslint.org/docs/rules/curly
+  curly: error
+
+  # https://eslint.org/docs/rules/no-multiple-empty-lines
+  no-multiple-empty-lines: error
+
+  # https://eslint.org/docs/rules/no-tabs
+  no-tabs: error
+
+  # https://eslint.org/docs/rules/no-eval
+  no-eval: error
+
+  # https://eslint.org/docs/rules/no-duplicate-imports
+  no-duplicate-imports: error
+
+  # https://eslint.org/docs/rules/no-var
+  no-var: error
+
+  # https://eslint.org/docs/rules/no-unsafe-finally
+  no-unsafe-finally: error
+
+  # https://eslint.org/docs/rules/no-empty
+  no-empty: off
+
+  # https://eslint.org/docs/rules/prefer-template
+  prefer-template: error
+
+  # https://eslint.org/docs/rules/prefer-const
+  prefer-const: error
+
+  # https://eslint.org/docs/rules/prefer-rest-params
+  prefer-rest-params: error
+
+  # https://eslint.org/docs/rules/prefer-spread
+  prefer-spread: error
+
+  # https://eslint.org/docs/rules/no-case-declarations
+  no-case-declarations: off
+
+  # https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-unresolved.md
+  import/no-unresolved: off
+
+  # https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/first.md
+  import/first: error # added
+
+  # https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/default.md
+  import/default: error
+
+  # https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/export.md
+  import/export: error
+
+  # https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/named.md
+  import/named: off # added
+
+  # https://github.com/mysticatea/eslint-plugin-node/blob/master/docs/rules/no-missing-import.md
+  n/no-missing-import: off
+
+  # https://github.com/mysticatea/eslint-plugin-node/blob/master/docs/rules/no-unpublished-import.md
+  n/no-unpublished-import: off
+
+  # Typescript-specific rules with @stylistic
+
+  # https://typescript-eslint.io/rules/no-empty-object-type
+  '@typescript-eslint/no-empty-object-type':
+    - error
+    - allowInterfaces: 'never'
+      allowObjectTypes: 'never'
+
+  # https://typescript-eslint.io/rules/explicit-member-accessibility
+  '@typescript-eslint/explicit-member-accessibility':
+    - error
+    - accessibility: explicit
+
+  # https://typescript-eslint.io/rules/explicit-function-return-type
+  '@typescript-eslint/explicit-function-return-type': error
+
+  # https://typescript-eslint.io/rules/no-misused-new
+  '@typescript-eslint/no-misused-new': error
+
+  # https://typescript-eslint.io/rules/naming-convention
+  '@typescript-eslint/naming-convention':
+    - error
+    - selector:
+        - class
+        - enum
+      format:
+        - PascalCase
+    - selector:
+        - parameter
+        - classProperty
+        - typeProperty
+        - classMethod
+        - typeMethod
+        - function
+      format:
+        - camelCase
+    - selector:
+        - classProperty
+        - variable
+      modifiers:
+        - private
+      format:
+        - camelCase
+      leadingUnderscore: require
+    - selector:
+        - classProperty
+        - variable
+      modifiers:
+        - protected
+      format:
+        - camelCase
+      leadingUnderscore: require
+    - selector:
+        - interface
+      format:
+        - PascalCase
+      prefix:
+        - I
+
+  # https://eslint.style/rules/default/semi
+  '@stylistic/semi': error
+
+  #   '@stylistic/ts/ban-types':
+  #     - error
+  #     - types:
+  #         null: 'Use 'undefined' instead of 'null''
+
+  # https://eslint.style/rules/default/indent
+  '@stylistic/indent':
+    - error
+    - 4
+    - ImportDeclaration: 1
+      SwitchCase: 1
+      VariableDeclarator: first
+      FunctionDeclaration:
+        parameters: 1
+      FunctionExpression:
+        parameters: 1
+      CallExpression:
+        arguments: 1
+      ArrayExpression: 1
+      ObjectExpression: first
+      MemberExpression: 1
+
+  # https://eslint.style/rules/default/brace-style
+  '@stylistic/brace-style':
+    - error
+    - allman
+
+  # https://typescript-eslint.io/rules/member-ordering/
+  '@@typescript-eslint/member-ordering': off
+
+  # https://typescript-eslint.io/rules/no-non-null-assertion
+  '@typescript-eslint/no-non-null-assertion': off
+
+  # https://typescript-eslint.io/rules/no-non-null-asserted-optional-chain
+  '@typescript-eslint/no-non-null-asserted-optional-chain': off
+
+  # https://typescript-eslint.io/rules/no-explicit-any
+  '@typescript-eslint/no-explicit-any': error # added
+
+  # https://typescript-eslint.io/rules/no-require-imports
+  '@typescript-eslint/no-require-imports': error # added
+
+  # https://typescript-eslint.io/rules/no-unnecessary-type-assertion
+  '@typescript-eslint/no-unnecessary-type-assertion': error # added
+
+  # https://typescript-eslint.io/rules/no-unsafe-argument
+  # '@typescript-eslint/no-unsafe-argument': error # added
+
+  # https://typescript-eslint.io/rules/no-unsafe-assignment
+  # '@typescript-eslint/no-unsafe-assignment': error # added
+
+  # https://typescript-eslint.io/rules/no-unsafe-call
+  # '@typescript-eslint/no-unsafe-call': off
+  # '@typescript-eslint/no-unsafe-call': error # added
+
+  # https://typescript-eslint.io/rules/no-unsafe-member-access
+  # '@typescript-eslint/no-unsafe-member-access': error # added
+
+  # https://typescript-eslint.io/rules/no-unsafe-return
+  # '@typescript-eslint/no-unsafe-return': 'error' # added
+
+  # https://typescript-eslint.io/rules/no-unused-vars
+  '@typescript-eslint/no-unused-vars': # added
+    - error
+    - vars: 'local'
+
+  # https://typescript-eslint.io/rules/prefer-string-starts-ends-with
+  '@typescript-eslint/prefer-string-starts-ends-with': error # added
+
+  # https://typescript-eslint.io/rules/restrict-plus-operands
+  '@typescript-eslint/restrict-plus-operands': error
+
+  # https://typescript-eslint.io/rules/restrict-template-expressions
+  '@typescript-eslint/restrict-template-expressions':
+    - error
+    - allowNumber: true
+      allowBoolean: true
+      allowAny: false
+      allowNullish: false
+
+  # https://typescript-eslint.io/rules/triple-slash-reference
+  '@typescript-eslint/triple-slash-reference': 
+    - error
+    - path: 'never'
+      types: 'never'
+      lib: 'never'
+
+  # https://typescript-eslint.io/rules/no-floating-promises
+  '@typescript-eslint/no-floating-promises':
+    - error
+    - ignoreVoid: false
+      ignoreIIFE: false
+
+  # https://typescript-eslint.io/rules/no-misused-promises
+  '@typescript-eslint/no-misused-promises':
+    - error
+    - checksConditionals: true
+      checksVoidReturn: true
+
+  jsdoc/require-param-type: off
+  jsdoc/require-returns-type: off
