@@ -38,6 +38,8 @@ type HeaderLinks =
 
         lnkRegister: Locator;
         lnkLogin: Locator;
+        lnkCurrentUser: Locator;
+        lnkLogout: Locator;
         shoppingCart: ShoppingCart;
         wishlist: Wishlist;
     };
@@ -50,9 +52,36 @@ type Header =
         headerLinks: HeaderLinks;
     };
 
+type ComputersSubMenu =
+    {
+        root: Locator;
+
+        lnkDesktops: Locator;
+        lnkNotebooks: Locator;
+        lnkAccessories: Locator;
+    };
+
+type Electronics =
+    {
+        root: Locator;
+
+        lnkCameraPhoto: Locator;
+        lnkCellPhones: Locator;
+    };
+
 type HeaderMenu =
     {
         root: Locator;
+
+        lnkBooks: Locator;
+        lnkComputers: Locator;
+        computersSubMenu: ComputersSubMenu;
+        lnkElectronics: Locator;
+        electronics: Electronics;
+        lnkApparelAndShoes: Locator;
+        lnkDigitalDownloads: Locator;
+        lnkJewelry: Locator;
+        lnkGiftCards: Locator;
     };
 
 type Left =
@@ -124,8 +153,10 @@ export class MainPage extends BasePage
                 {
                     root: this._page.locator('div.header-links'),
 
-                    lnkRegister: this._page.locator('a.ico-register'),
-                    lnkLogin: this._page.locator('a.ico-login'),
+                    lnkRegister: this._page.locator('div.header-links a.ico-register'),
+                    lnkLogin: this._page.locator('div.header-links a.ico-login'),
+                    lnkCurrentUser: this._page.locator('div.header-links a.account'),
+                    lnkLogout: this._page.locator('div.header-links a.ico-logout'),
                     shoppingCart:
                     {
                         root: this._page.locator('#topcartlink'),
@@ -146,7 +177,30 @@ export class MainPage extends BasePage
             },
             headerMenu:
             {
-                root: this._page.locator('div.header-menu')
+                root: this._page.locator('div.header-menu'),
+
+                lnkBooks: this._page.locator('div.header-menu ul.top-menu a[href*="/books"]'),
+                lnkComputers: this._page.locator('div.header-menu ul.top-menu a[href*="/computers"]'),
+                computersSubMenu:
+                {
+                    root: this._page.locator('div.header-menu ul.top-menu li:has(a[href*="/computers"]) ul.sublist.firstLevel'),
+
+                    lnkDesktops: this._page.locator('div.header-menu ul.top-menu li:has(a[href*="/computers"]) ul.sublist.firstLevel a[href*="/desktops"]'),
+                    lnkNotebooks: this._page.locator('div.header-menu ul.top-menu li:has(a[href*="/computers"]) ul.sublist.firstLevel a[href*="/notebooks"]'),
+                    lnkAccessories: this._page.locator('div.header-menu ul.top-menu li:has(a[href*="/computers"]) ul.sublist.firstLevel a[href*="/accessories"]')
+                },
+                lnkElectronics: this._page.locator('div.header-menu ul.top-menu a[href*="/electronics"]'),
+                electronics:
+                {
+                    root: this.page.locator('div.header-menu ul.top-menu li:has(a[href*="/electronics"]) ul.sublist.firstLevel'),
+
+                    lnkCameraPhoto: this.page.locator('div.header-menu ul.top-menu li:has(a[href*="/electronics"]) ul.sublist.firstLevel a[href*="/camera-photo"]'),
+                    lnkCellPhones: this.page.locator('div.header-menu ul.top-menu li:has(a[href*="/electronics"]) ul.sublist.firstLevel a[href*="/cell-phones"]')
+                },
+                lnkApparelAndShoes: this._page.locator('div.header-menu ul.top-menu a[href*="/apparel-shoes"]'),
+                lnkDigitalDownloads: this._page.locator('div.header-menu ul.top-menu a[href*="/digital-downloads"]'),
+                lnkJewelry: this._page.locator('div.header-menu ul.top-menu a[href*="/jewelry"]'),
+                lnkGiftCards: this._page.locator('div.header-menu ul.top-menu a[href*="/gift-cards"]')
             },
             mainContainer:
             {
@@ -172,6 +226,10 @@ export class MainPage extends BasePage
         };
     }
 
+    // #region Method
+
+    // #region Basics
+
     /**
      * Waits for the home page to load.
      */
@@ -181,15 +239,9 @@ export class MainPage extends BasePage
         await this._locators.root.waitFor();
     }
 
-    /**
-     * Checks if the user is currently logged in.
-     * @returns true if the user is currently logged in, otherwise false.
-     */
-    public async isLoggedIn(): Promise<boolean>
-    {
-        // return await this._locators.right.butUserMenu.isVisible();
-        return await this._locators.header.root.isVisible();
-    }
+    // #endregion
+
+    // #region HeaderLinks
 
     /**
      * Clicks the Register link.
@@ -201,6 +253,16 @@ export class MainPage extends BasePage
     }
 
     /**
+     * Checks if a user is currently logged in.
+     * @returns true if a user is currently logged in, otherwise false.
+     */
+    public async isLoggedIn(): Promise<boolean>
+    {
+        this.logger.write('Check if a user is currently logged in.');
+        return await this._locators.header.headerLinks.lnkCurrentUser.isVisible();
+    }
+
+    /**
      * Clicks the Login link.
      */
     public async clickLogin(): Promise<void>
@@ -208,4 +270,181 @@ export class MainPage extends BasePage
         this.logger.write('Click on lnkLogin.');
         await this._locators.header.headerLinks.lnkLogin.click();
     }
+
+    /**
+     * Logs out the user if they are currently logged in.
+     */
+    public async ensureUserLoggedOut(): Promise<void>
+    {
+        if (await this.isLoggedIn())
+        {
+            await this.clickLogout();
+        }
+    }
+
+    /**
+     * Clicks the Logout link.
+     */
+    public async clickLogout(): Promise<void>
+    {
+        this.logger.write('Click on lnkLogout.');
+        await this._locators.header.headerLinks.lnkLogout.click();
+    }
+
+    // #endregion
+
+    // #region HeaderMenu
+
+    /**
+     * Clicks the Books link.
+     */
+    public async clickBooks(): Promise<void>
+    {
+        this.logger.write('Click on lnkBooks.');
+        await this._locators.headerMenu.lnkBooks.click();
+    }
+
+    /**
+     * Clicks the Computers link.
+     */
+    public async clickComputers(): Promise<void>
+    {
+        this.logger.write('Click on lnkComputers.');
+        await this._locators.headerMenu.lnkComputers.click();
+    }
+
+    /**
+     * Clicks the Electronics link.
+     */
+    public async clickElectronics(): Promise<void>
+    {
+        this.logger.write('Click on lnkElectronics.');
+        await this._locators.headerMenu.lnkElectronics.click();
+    }
+
+    /**
+     * Clicks the Apparel & Shoes link.
+     */
+    public async clickApparelAndShoes(): Promise<void>
+    {
+        this.logger.write('Click on lnkApparelAndShoes.');
+        await this._locators.headerMenu.lnkApparelAndShoes.click();
+    }
+
+    /**
+     * Clicks the Digital Downloads link.
+     */
+    public async clickDigitalDownloads(): Promise<void>
+    {
+        this.logger.write('Click on lnkDigitalDownloads.');
+        await this._locators.headerMenu.lnkDigitalDownloads.click();
+    }
+
+    /**
+     * Clicks the Jewelry link.
+     */
+    public async clickJewelry(): Promise<void>
+    {
+        this.logger.write('Click on lnkJewelry.');
+        await this._locators.headerMenu.lnkJewelry.click();
+    }
+
+    /**
+     * Clicks the Gift Cards link.
+     */
+    public async clickGiftCards(): Promise<void>
+    {
+        this.logger.write('Click on lnkGiftCards.');
+        await this._locators.headerMenu.lnkGiftCards.click();
+    }
+
+    /**
+     * Hover over the Computers link.
+     */
+    public async hoverOverComputers(): Promise<void>
+    {
+        this.logger.write('Hover over the Computers link.');
+        await this._locators.headerMenu.lnkComputers.hover();
+    }
+
+    /**
+     * Clicks the Desktops link.
+     */
+    public async clickDesktops(): Promise<void>
+    {
+        this.logger.write('Click on lnkDesktops.');
+        await this._locators.headerMenu.computersSubMenu.lnkDesktops.click();
+    }
+
+    /**
+     * Clicks the Notebooks link.
+     */
+    public async clickNotebooks(): Promise<void>
+    {
+        this.logger.write('Click on lnkNotebooks.');
+        await this._locators.headerMenu.computersSubMenu.lnkNotebooks.click();
+    }
+
+    /**
+     * Clicks the Accessories link.
+     */
+    public async clickAccessories(): Promise<void>
+    {
+        this.logger.write('Click on lnkAccessories.');
+        await this._locators.headerMenu.computersSubMenu.lnkAccessories.click();
+    }
+
+    /**
+     * Hover over the Electronics link.
+     */
+    public async hoverOverElectronics(): Promise<void>
+    {
+        this.logger.write('Hover over the Electronics link.');
+        await this._locators.headerMenu.lnkElectronics.hover();
+    }
+
+    /**
+     * Clicks the Camera & Photo link.
+     */
+    public async clickCameraPhoto(): Promise<void>
+    {
+        this.logger.write('Click on lnkCameraPhoto.');
+        await this._locators.headerMenu.electronics.lnkCameraPhoto.click();
+    }
+
+    /**
+     * Clicks the Cell Phones link.
+     */
+    public async clickCellPhones(): Promise<void>
+    {
+        this.logger.write('Click on lnkCellPhones.');
+        await this._locators.headerMenu.electronics.lnkCellPhones.click();
+    }
+
+    // #endregion
+
+    // #region Assertions
+
+    /**
+     * Verifies that the current logged in user has the specified email address.
+     * 
+     * @param expectedMessage The expected current user email address.
+     */
+    public async assertCurrentUser(expectedCurrentUserEmail: string): Promise<void>
+    {
+        if (expectedCurrentUserEmail)
+        {
+            this.logger.write(`Verify that the result message on the register result view contains text "${expectedCurrentUserEmail}".`);
+            await expect(this._locators.header.headerLinks.lnkCurrentUser).toContainText(expectedCurrentUserEmail);
+        }
+        else
+        {
+            this.logger.write(`Verify that the result message on the register result view has text "${expectedCurrentUserEmail}".`);
+            await expect(this._locators.header.headerLinks.lnkCurrentUser).toHaveText(expectedCurrentUserEmail);
+        }
+    }
+
+    // #endregion
+
+    // #endregion
 }

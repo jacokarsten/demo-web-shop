@@ -4,7 +4,7 @@ import { now } from './date';
 import { Page, TestInfo, WorkerInfo } from '@playwright/test';
 
 /**
- * Represents a logger that writes messages to the console log.
+ * Writes messages to the console log.
  */
 export class Logger implements ILogger
 {

@@ -1,13 +1,14 @@
+import { DesktopsView } from '../src/pages/views/desktops-view';
+import { LoginView } from '../src/pages/views/login-view';
 import { MainNav } from '../src/nav/main-nav';
 import { MainPage } from '../src/pages/main/main-page';
-import { RegisterResultView } from '../src/pages/views/register-result-view';
 import { RegisterView } from '../src/pages/views/register-view';
 import { test as base } from 'playwright-bdd';
 import { TestContext } from '../src/context/test-context';
 import { WorkerContext } from '../src/context/worker-context';
 
 /**
- * Represents the test fixture for the account tests.
+ * Represents the test fixture for the order tests.
  */
 export const test = base.extend<{ ctx: TestContext; }, { workerCtx: WorkerContext; }>({
 
@@ -29,7 +30,8 @@ export const test = base.extend<{ ctx: TestContext; }, { workerCtx: WorkerContex
         context.addNav(new MainNav(page, context.logger));
         context.addPage(new MainPage(page, context.logger));
         context.addPage(new RegisterView(page, context.logger));
-        context.addPage(new RegisterResultView(page, context.logger));
+        context.addPage(new LoginView(page, context.logger));
+        context.addPage(new DesktopsView(page, context.logger));
 
         await use(context);
     }
